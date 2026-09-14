@@ -95,6 +95,15 @@ The project includes:
 
 Users can generate a professional PDF analysis report containing the news analysis and prediction results.
 
+## 📸 Project Screenshots
+### Home Page
+![NewsGuard AI Home Page](screenshots/home.png)
+
+### Fake News Prediction Result
+![Fake News Prediction Result](screenshots/prediction-result.png)
+
+### Model Evaluation Dashboard
+![Model Evaluation Dashboard](screenshots/model-evaluation.png)
 ---
 
 ## 🧠 System Architecture
@@ -131,4 +140,5 @@ Users can generate a professional PDF analysis report containing the news analys
           Result Dashboard
                   │
                   ▼
-             PDF Report
+             PDF Report    
+
