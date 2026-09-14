@@ -1,0 +1,20 @@
+{
+    "model": "LinearSVC",
+    "total_articles": 39105,
+    "training_articles": 31284,
+    "testing_articles": 7821,
+    "accuracy": 0.9959,
+    "precision": 0.9937,
+    "recall": 0.9988,
+    "f1_score": 0.9962,
+    "confusion_matrix": [
+        [
+            3555,
+            27
+        ],
+        [
+            5,
+            4234
+        ]
+    ]
+}

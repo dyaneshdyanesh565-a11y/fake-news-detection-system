@@ -1,0 +1,26 @@
+{
+    "total_articles": 39105,
+    "training_articles": 31284,
+    "testing_articles": 7821,
+    "best_model": "Linear SVM",
+    "results": {
+        "Logistic Regression": {
+            "accuracy": 0.9896,
+            "precision": 0.9842,
+            "recall": 0.9969,
+            "f1_score": 0.9905
+        },
+        "Linear SVM": {
+            "accuracy": 0.9959,
+            "precision": 0.9937,
+            "recall": 0.9988,
+            "f1_score": 0.9962
+        },
+        "Multinomial Naive Bayes": {
+            "accuracy": 0.9627,
+            "precision": 0.9642,
+            "recall": 0.967,
+            "f1_score": 0.9656
+        }
+    }
+}

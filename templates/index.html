@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        NewsGuard AI | Fake News Detection
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+    <div class="nav-container">
+
+        <div class="logo">
+
+            <span class="logo-icon">
+                N
+            </span>
+
+            <span>
+                NewsGuard AI
+            </span>
+
+        </div>
+
+
+        <div class="nav-status">
+
+            <span class="status-dot"></span>
+
+            AI Analysis System
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            AI-POWERED NEWS ANALYSIS
+        </div>
+
+
+        <h1>
+
+            Fake News Detection
+
+            <span>
+                &amp;
+            </span>
+
+            Credibility Analysis
+
+        </h1>
+
+
+        <p>
+
+            Analyze news articles using Natural Language
+            Processing and Machine Learning to identify
+            patterns associated with fake and real news.
+
+        </p>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="main-container">
+
+
+
+<!-- =========================================
+     NEWS ANALYZER
+========================================= -->
+
+<section class="analyzer-section">
+
+    <div class="section-heading">
+
+        <span class="section-number">
+            01
+        </span>
+
+
+        <div>
+
+            <h2>
+                News Analyzer
+            </h2>
+
+            <p>
+                Paste a headline or complete news article
+                below for AI-powered analysis.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <form
+        action="/"
+        method="POST"
+        class="analyzer-form"
+    >
+
+        <label for="article_text">
+            News Article
+        </label>
+
+
+        <textarea
+            id="article_text"
+            name="article_text"
+            placeholder="Paste the news headline or article here..."
+            required
+        >{{ article_text or "" }}</textarea>
+
+
+        <div class="form-footer">
+
+            <span class="input-hint">
+
+                For better analysis, provide the
+                complete article.
+
+            </span>
+
+
+            <button
+                type="submit"
+                class="analyze-btn"
+            >
+
+                Analyze News
+
+                <span>
+                    →
+                </span>
+
+            </button>
+
+        </div>
+
+    </form>
+
+</section>
+
+
+
+<!-- =========================================
+     ANALYSIS RESULT
+========================================= -->
+
+{% if result %}
+
+<section class="result-section">
+
+
+    <div class="section-heading">
+
+        <span class="section-number">
+            02
+        </span>
+
+
+        <div>
+
+            <h2>
+                Analysis Result
+            </h2>
+
+            <p>
+                Machine learning prediction and
+                linguistic analysis.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="result-card">
+
+
+        <!-- PREDICTION -->
+
+        <div class="prediction-box">
+
+            <span class="result-label">
+                PREDICTION
+            </span>
+
+
+            <h3
+                class="
+                {% if result.prediction == 'Fake News' %}
+                    fake-result
+                {% else %}
+                    real-result
+                {% endif %}
+                "
+            >
+
+                {{ result.prediction }}
+
+            </h3>
+
+        </div>
+
+
+
+        <!-- CONFIDENCE -->
+
+        <div class="confidence-box">
+
+            <span class="result-label">
+                MODEL CONFIDENCE LEVEL
+            </span>
+
+
+            <h3>
+
+                {{ result.confidence_level }}
+
+            </h3>
+
+
+            {% if result.decision_score is defined %}
+
+            <p>
+
+                Decision score:
+
+                <strong>
+                    {{ "%.4f"|format(result.decision_score) }}
+                </strong>
+
+            </p>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         PDF DOWNLOAD
+    ====================================== -->
+
+    {% if article_text %}
+
+    <div class="report-download">
+
+        <form
+            action="/download-report"
+            method="POST"
+        >
+
+            <input
+                type="hidden"
+                name="article_text"
+                value="{{ article_text }}"
+            >
+
+
+            <button
+                type="submit"
+                class="download-btn"
+            >
+
+                📄 Download Analysis Report
+
+            </button>
+
+        </form>
+
+
+        <p>
+
+            Generate a professional PDF containing
+            the prediction, text statistics,
+            credibility indicators and influential
+            features.
+
+        </p>
+
+    </div>
+
+    {% endif %}
+
+
+
+    <!-- =====================================
+         RESPONSIBLE USE
+    ====================================== -->
+
+    <div class="warning-box">
+
+        <div class="warning-icon">
+            !
+        </div>
+
+
+        <div>
+
+            <h4>
+                Responsible Use Notice
+            </h4>
+
+
+            <p>
+
+                This system identifies linguistic and
+                statistical patterns learned from its
+                training dataset. It does not independently
+                verify facts, sources, events, or claims.
+                A prediction should not be treated as proof
+                that an article is true or false.
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+{% endif %}
+
+
+
+<!-- =========================================
+     TEXT STATISTICS
+========================================= -->
+
+{% if statistics %}
+
+<section class="statistics-section">
+
+
+    <div class="section-heading">
+
+        <span class="section-number">
+            03
+        </span>
+
+
+        <div>
+
+            <h2>
+                Text Statistics
+            </h2>
+
+            <p>
+                Structural characteristics of the
+                submitted article.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="stats-grid">
+
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                WORDS
+            </span>
+
+            <strong>
+                {{ statistics.word_count }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                CHARACTERS
+            </span>
+
+            <strong>
+                {{ statistics.character_count }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                SENTENCES
+            </span>
+
+            <strong>
+                {{ statistics.sentence_count }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                AVG. SENTENCE LENGTH
+            </span>
+
+            <strong>
+                {{ statistics.avg_sentence_length }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                UPPERCASE WORDS
+            </span>
+
+            <strong>
+                {{ statistics.uppercase_words }}
+            </strong>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-label">
+                EXCLAMATION MARKS
+            </span>
+
+            <strong>
+                {{ statistics.exclamation_marks }}
+            </strong>
+
+        </div>
+
+    </div>
+
+
+</section>
+
+{% endif %}
+
+
+
+<!-- =========================================
+     CREDIBILITY INDICATORS
+========================================= -->
+
+{% if indicators %}
+
+<section class="indicators-section">
+
+
+    <div class="section-heading">
+
+        <span class="section-number">
+            04
+        </span>
+
+
+        <div>
+
+            <h2>
+                Credibility Indicators
+            </h2>
+
+            <p>
+                Linguistic signals detected in the
+                submitted text.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="indicator-grid">
+
+
+        {% for indicator in indicators %}
+
+        <div class="indicator-card">
+
+            <div class="indicator-icon">
+
+                {% if indicator.type == "positive" %}
+
+                    ✓
+
+                {% else %}
+
+                    ⚠
+
+                {% endif %}
+
+            </div>
+
+
+            <div class="indicator-content">
+
+                <h4>
+                    {{ indicator.title }}
+                </h4>
+
+                <p>
+                    {{ indicator.description }}
+                </p>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+
+    <p class="indicator-note">
+
+        These are linguistic indicators only and are
+        not evidence that the information is factually false.
+
+    </p>
+
+
+</section>
+
+{% endif %}
+
+
+
+<!-- =========================================
+     INFLUENTIAL WORDS
+========================================= -->
+
+{% if influential_words %}
+
+<section class="words-section">
+
+
+    <div class="section-heading">
+
+        <span class="section-number">
+            05
+        </span>
+
+
+        <div>
+
+            <h2>
+                Influential Words &amp; Features
+            </h2>
+
+            <p>
+                Terms that contributed strongly to the
+                machine learning decision.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="influential-grid">
+
+
+        {% for item in influential_words %}
+
+        <div class="influential-card">
+
+
+            <div class="influential-top">
+
+                <span class="influential-word">
+
+                    {{ item.word }}
+
+                </span>
+
+
+                <span
+                    class="
+                    direction-badge
+
+                    {% if item.direction == 'Real News' %}
+
+                        real-direction
+
+                    {% else %}
+
+                        fake-direction
+
+                    {% endif %}
+                    "
+                >
+
+                    {{ item.direction }}
+
+                </span>
+
+            </div>
+
+
+            <div class="influence-score">
+
+                <span>
+                    Influence Score
+                </span>
+
+                <strong>
+
+                    {{ "%.4f"|format(item.score) }}
+
+                </strong>
+
+            </div>
+
+
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+    <p class="indicator-note">
+
+        Influential features reflect patterns learned
+        from the training data and do not represent
+        independent fact verification.
+
+    </p>
+
+
+</section>
+
+{% endif %}
+
+
+
+<!-- =========================================
+     MODEL EVALUATION
+========================================= -->
+
+{% if model_results %}
+
+<section class="evaluation-section">
+
+
+    <div class="section-heading">
+
+        <span class="section-number">
+            06
+        </span>
+
+
+        <div>
+
+            <h2>
+                Model Evaluation
+            </h2>
+
+            <p>
+                Performance of the machine learning
+                models evaluated on the test dataset.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================
+         MODEL CARDS
+    ====================================== -->
+
+    <div class="model-grid">
+
+
+        {% for model_name, metrics in model_results.results.items() %}
+
+        <div
+            class="
+            model-card
+
+            {% if model_name == model_results.best_model %}
+                best-model
+            {% endif %}
+            "
+        >
+
+
+            {% if model_name == model_results.best_model %}
+
+            <div class="best-badge">
+                BEST MODEL
+            </div>
+
+            {% endif %}
+
+
+            <h3>
+                {{ model_name }}
+            </h3>
+
+
+            <div class="metric-row">
+
+                <span>
+                    Accuracy
+                </span>
+
+                <strong>
+                    {{ "%.2f"|format(metrics.accuracy * 100) }}%
+                </strong>
+
+            </div>
+
+
+            <div class="metric-row">
+
+                <span>
+                    Precision
+                </span>
+
+                <strong>
+                    {{ "%.2f"|format(metrics.precision * 100) }}%
+                </strong>
+
+            </div>
+
+
+            <div class="metric-row">
+
+                <span>
+                    Recall
+                </span>
+
+                <strong>
+                    {{ "%.2f"|format(metrics.recall * 100) }}%
+                </strong>
+
+            </div>
+
+
+            <div class="metric-row">
+
+                <span>
+                    F1 Score
+                </span>
+
+                <strong>
+                    {{ "%.2f"|format(metrics.f1_score * 100) }}%
+                </strong>
+
+            </div>
+
+
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         MODEL ACCURACY CHART
+    ====================================== -->
+
+    <div class="chart-card">
+
+
+        <div class="chart-heading">
+
+            <h3>
+                Model Accuracy Comparison
+            </h3>
+
+            <p>
+                Accuracy achieved by each machine
+                learning model on the test dataset.
+            </p>
+
+        </div>
+
+
+        <div class="chart-container">
+
+            <img
+                src="{{ url_for('static', filename='model_comparison.png') }}"
+                alt="Machine Learning Model Accuracy Comparison"
+            >
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         FEATURE IMPORTANCE
+    ====================================== -->
+
+    <div class="chart-card">
+
+
+        <div class="chart-heading">
+
+            <h3>
+                Feature Importance Analysis
+            </h3>
+
+            <p>
+                Important TF-IDF words and phrases
+                influencing the selected Linear SVM model.
+            </p>
+
+        </div>
+
+
+        <div class="chart-container feature-chart-container">
+
+            <img
+                src="{{ url_for('static', filename='feature_importance.png') }}"
+                alt="Feature Importance Analysis for Fake News Detection"
+            >
+
+        </div>
+
+
+        <p class="indicator-note">
+
+            Feature influence represents statistical
+            patterns learned from the training dataset.
+            It does not prove that a particular word or
+            phrase is evidence of fake or real information.
+
+        </p>
+
+
+    </div>
+
+
+
+    <!-- =====================================
+         CONFUSION MATRIX
+    ====================================== -->
+
+    <div class="chart-card">
+
+
+        <div class="chart-heading">
+
+            <h3>
+                Confusion Matrix
+            </h3>
+
+            <p>
+                Prediction results of the selected
+                machine learning model.
+            </p>
+
+        </div>
+
+
+        <div class="chart-container">
+
+            <img
+                src="{{ url_for('static', filename='confusion_matrix.png') }}"
+                alt="Fake News Detection Confusion Matrix"
+            >
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+{% endif %}
+
+
+
+<!-- =========================================
+     DATASET INFORMATION
+========================================= -->
+
+<section class="dataset-section">
+
+
+    <div class="section-heading">
+
+        <span class="section-number">
+            07
+        </span>
+
+
+        <div>
+
+            <h2>
+                Dataset Information
+            </h2>
+
+            <p>
+                Information about the data used to
+                train and evaluate the system.
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="dataset-card">
+
+
+        <div class="dataset-item">
+
+            <span>
+                Dataset
+            </span>
+
+            <strong>
+                ISOT Fake News Dataset
+            </strong>
+
+        </div>
+
+
+        <div class="dataset-item">
+
+            <span>
+                Total Articles
+            </span>
+
+            <strong>
+                39,105
+            </strong>
+
+        </div>
+
+
+        <div class="dataset-item">
+
+            <span>
+                Training Articles
+            </span>
+
+            <strong>
+                31,284
+            </strong>
+
+        </div>
+
+
+        <div class="dataset-item">
+
+            <span>
+                Testing Articles
+            </span>
+
+            <strong>
+                7,821
+            </strong>
+
+        </div>
+
+
+        <div class="dataset-item">
+
+            <span>
+                Text Representation
+            </span>
+
+            <strong>
+                TF-IDF
+            </strong>
+
+        </div>
+
+
+        <div class="dataset-item">
+
+            <span>
+                Best Classifier
+            </span>
+
+            <strong>
+                Linear SVM
+            </strong>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================
+     DISCLAIMER
+========================================= -->
+
+<section class="disclaimer-section">
+
+
+    <h3>
+        Important Disclaimer
+    </h3>
+
+
+    <p>
+
+        This project is an educational machine learning
+        system. Its predictions are based on patterns
+        learned from the training dataset. It cannot
+        independently determine whether a real-world
+        claim is factually correct. Always verify important
+        information using reliable primary sources and
+        professional fact-checking organizations.
+
+    </p>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer class="footer">
+
+
+    <p>
+
+        NewsGuard AI
+
+        <span>
+            •
+        </span>
+
+        Fake News Detection &amp; Credibility Analysis
+
+    </p>
+
+
+    <p class="footer-small">
+
+        Built with Python, Flask, Scikit-learn &amp; NLP
+
+    </p>
+
+
+</footer>
+
+
+</body>
+
+</html>

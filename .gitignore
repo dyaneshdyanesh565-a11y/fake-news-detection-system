@@ -1,0 +1,22 @@
+# Virtual environment
+venv/
+
+# Dataset files
+Fake.csv
+True.csv
+news_dataset.csv
+
+# Generated PDF reports
+Fake_News_Detection_Model_Report.pdf
+News_Analysis_Report.pdf
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# Operating system files
+.DS_Store
+Thumbs.db
